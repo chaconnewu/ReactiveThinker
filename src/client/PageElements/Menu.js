@@ -7,6 +7,11 @@ class Menu extends React.Component {
         <a className="active item">
           Home
         </a>
+        <div className="right menu">
+          <a className="ui item">
+            Logout
+          </a>
+        </div>
       </div>
     );
   }
