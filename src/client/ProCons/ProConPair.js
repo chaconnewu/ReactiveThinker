@@ -1,9 +1,22 @@
 import React from 'react';
+import Argument from './Argument';
 
 class ProConPair extends React.Component {
   render () {
+
     return (
-      <div>Hello, ProCon pair</div>
+      <div className="ui grid">
+        <div className="ui row">
+          <div className="one wide column"></div>
+          <div className="five wide column">
+            <Argument />
+          </div>
+          
+          <div className="five wide column">
+            <Argument />
+          </div>
+        </div>
+      </div>
     );
   }
 }

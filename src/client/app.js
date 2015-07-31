@@ -2,7 +2,6 @@ import "./app.less";
 import Page from './Page';
 import React from 'react';
 
-
 var App = React.createClass({
   render () {
     return (
