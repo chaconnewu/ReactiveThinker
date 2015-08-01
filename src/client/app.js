@@ -1,6 +1,7 @@
-import "./app.less";
-import Page from './Page';
 import React from 'react';
+import Page from './Page';
+import Rx from 'rx';
+import "./app.less";
 
 var App = React.createClass({
   render () {

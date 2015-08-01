@@ -14,10 +14,16 @@ class AceEditor extends React.Component {
   componentDidMount () {
     var self = this;
     self.editor = ace.edit(React.findDOMNode(self));
+    // Set the editor mode to text
     self.editor.getSession().setMode("ace/mode/text");
+    // Wrop line
     self.editor.getSession().setUseWrapMode(true);
+    // Hide the left bar (Gutter)
     self.editor.renderer.setShowGutter(false);
+    // Disable line highlight
     self.editor.setHighlightActiveLine(false);
+    // Show content
+    self.editor.setValue(self.props.initialContent, 1);
   }
 
   render () {

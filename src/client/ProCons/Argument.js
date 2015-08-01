@@ -30,9 +30,19 @@ class Argument extends React.Component {
       supportListClass = 'RT-Argument-SupportList-hidden';
     }
 
+    var supports = self.props.argument.supports.map(function(support, index) {
+      return (
+        <AceEditor
+          key={ index }
+          initialContent={ support }
+          type={AceEditor.Types.SUPPORT}
+        />
+      );
+    });
     return (
       <div>
         <AceEditor
+          initialContent={ self.props.argument.claim }
           type={AceEditor.Types.CLAIM}
         />
         <i
@@ -40,9 +50,7 @@ class Argument extends React.Component {
           onClick={ self.toggleSupportList.bind(self) }
         />
         <div className={ supportListClass }>
-          <AceEditor
-            type={AceEditor.Types.SUPPORT}
-          />
+          { supports }
         </div>
       </div>
     );

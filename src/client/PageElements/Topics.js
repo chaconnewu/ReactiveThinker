@@ -40,7 +40,7 @@ class Topics extends React.Component {
     });
 
     return (
-      <div className="ui text menu">
+      <div className="ui secondary pointing menu">
         <div className="header item">Topics</div>
         { topics }
       </div>
