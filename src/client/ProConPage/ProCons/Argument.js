@@ -2,6 +2,7 @@ import React from 'react';
 import AceEditor from './AceEditor';
 import './Argument.less';
 
+
 class Argument extends React.Component {
   constructor (props) {
     super(props);
@@ -9,6 +10,10 @@ class Argument extends React.Component {
     self.state = {
       show : true
     };
+  }
+
+  addSupport () {
+
   }
 
   toggleSupportList () {
@@ -45,10 +50,16 @@ class Argument extends React.Component {
           initialContent={ self.props.argument.claim }
           type={AceEditor.Types.CLAIM}
         />
-        <i
-          className={ iconClass }
-          onClick={ self.toggleSupportList.bind(self) }
-        />
+        <div className="RT-Argument-menu">
+          <i
+            className={ iconClass }
+            onClick={ self.toggleSupportList.bind(self) }
+          />
+          <i
+            className="large add circle icon"
+            onClick={ self.addSupport.bind(self) }
+          />
+        </div>
         <div className={ supportListClass }>
           { supports }
         </div>

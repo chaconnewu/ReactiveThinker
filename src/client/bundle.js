@@ -52,21 +52,21 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _Page = __webpack_require__(157);
+	var _ProConPagePage = __webpack_require__(157);
 
-	var _Page2 = _interopRequireDefault(_Page);
+	var _ProConPagePage2 = _interopRequireDefault(_ProConPagePage);
 
-	var _rx = __webpack_require__(176);
+	var _rx = __webpack_require__(178);
 
 	var _rx2 = _interopRequireDefault(_rx);
 
-	__webpack_require__(178);
+	__webpack_require__(180);
 
 	var App = _react2['default'].createClass({
 	  displayName: 'App',
 
 	  render: function render() {
-	    return _react2['default'].createElement(_Page2['default'], null);
+	    return _react2['default'].createElement(_ProConPagePage2['default'], null);
 	  }
 	});
 
@@ -20483,11 +20483,11 @@
 
 	var _PageElementsFooter2 = _interopRequireDefault(_PageElementsFooter);
 
-	var _PageElementsTopics = __webpack_require__(170);
+	var _PageElementsTopics = __webpack_require__(172);
 
 	var _PageElementsTopics2 = _interopRequireDefault(_PageElementsTopics);
 
-	__webpack_require__(174);
+	__webpack_require__(176);
 
 	var Page = (function (_React$Component) {
 	  _inherits(Page, _React$Component);
@@ -20668,6 +20668,8 @@
 
 	var _ProConPair2 = _interopRequireDefault(_ProConPair);
 
+	__webpack_require__(170);
+
 	var proconData = [{
 	  pro: {
 	    claim: 'This is pro claim 1',
@@ -20691,17 +20693,42 @@
 	var ProConContainer = (function (_React$Component) {
 	  _inherits(ProConContainer, _React$Component);
 
-	  function ProConContainer() {
+	  function ProConContainer(props) {
 	    _classCallCheck(this, ProConContainer);
 
-	    _get(Object.getPrototypeOf(ProConContainer.prototype), 'constructor', this).apply(this, arguments);
+	    _get(Object.getPrototypeOf(ProConContainer.prototype), 'constructor', this).call(this, props);
+	    var self = this;
+	    self.state = {
+	      proconData: proconData
+	    };
 	  }
 
 	  _createClass(ProConContainer, [{
+	    key: 'addProConPair',
+	    value: function addProConPair() {
+	      var self = this;
+	      var proconPair = {
+	        pro: {
+	          claim: 'This is a new pro',
+	          supports: []
+	        },
+	        con: {
+	          claim: 'This is a new con',
+	          supports: []
+	        }
+	      };
+
+	      var proconData = self.state.proconData;
+	      proconData.splice(0, 0, proconPair);
+	      self.setState({
+	        proconData: proconData
+	      });
+	    }
+	  }, {
 	    key: 'render',
 	    value: function render() {
 	      var self = this;
-	      var proConPairs = proconData.map(function (procon, index) {
+	      var proConPairs = self.state.proconData.map(function (procon, index) {
 	        return _react2['default'].createElement(_ProConPair2['default'], { key: index, procon: procon });
 	      });
 
@@ -20731,6 +20758,24 @@
 	                'h2',
 	                { className: 'ui header' },
 	                'Con'
+	              )
+	            )
+	          ),
+	          _react2['default'].createElement(
+	            'div',
+	            { className: 'ui row' },
+	            _react2['default'].createElement('div', { className: 'one wide column' }),
+	            _react2['default'].createElement(
+	              'div',
+	              {
+	                className: 'RT-ProConContainer-addProConButton three wide column',
+	                onClick: self.addProConPair.bind(self)
+	              },
+	              _react2['default'].createElement('i', { className: 'large plus icon' }),
+	              _react2['default'].createElement(
+	                'span',
+	                null,
+	                'Add a Pro & Con pair ...'
 	              )
 	            )
 	          )
@@ -20860,6 +20905,9 @@
 	  }
 
 	  _createClass(Argument, [{
+	    key: 'addSupport',
+	    value: function addSupport() {}
+	  }, {
 	    key: 'toggleSupportList',
 	    value: function toggleSupportList() {
 	      var self = this;
@@ -20895,10 +20943,18 @@
 	          initialContent: self.props.argument.claim,
 	          type: _AceEditor2['default'].Types.CLAIM
 	        }),
-	        _react2['default'].createElement('i', {
-	          className: iconClass,
-	          onClick: self.toggleSupportList.bind(self)
-	        }),
+	        _react2['default'].createElement(
+	          'div',
+	          { className: "RT-Argument-menu" },
+	          _react2['default'].createElement('i', {
+	            className: iconClass,
+	            onClick: self.toggleSupportList.bind(self)
+	          }),
+	          _react2['default'].createElement('i', {
+	            className: "large add circle icon",
+	            onClick: self.addSupport.bind(self)
+	          })
+	        ),
 	        _react2['default'].createElement(
 	          'div',
 	          { className: supportListClass },
@@ -21002,8 +21058,8 @@
 	if(false) {
 		// When the styles change, update the <style> tags
 		if(!content.locals) {
-			module.hot.accept("!!./../../../node_modules/css-loader/index.js!./../../../node_modules/less-loader/index.js!./AceEditor.less", function() {
-				var newContent = require("!!./../../../node_modules/css-loader/index.js!./../../../node_modules/less-loader/index.js!./AceEditor.less");
+			module.hot.accept("!!./../../../../node_modules/css-loader/index.js!./../../../../node_modules/less-loader/index.js!./AceEditor.less", function() {
+				var newContent = require("!!./../../../../node_modules/css-loader/index.js!./../../../../node_modules/less-loader/index.js!./AceEditor.less");
 				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
 				update(newContent);
 			});
@@ -21323,8 +21379,8 @@
 	if(false) {
 		// When the styles change, update the <style> tags
 		if(!content.locals) {
-			module.hot.accept("!!./../../../node_modules/css-loader/index.js!./../../../node_modules/less-loader/index.js!./Argument.less", function() {
-				var newContent = require("!!./../../../node_modules/css-loader/index.js!./../../../node_modules/less-loader/index.js!./Argument.less");
+			module.hot.accept("!!./../../../../node_modules/css-loader/index.js!./../../../../node_modules/less-loader/index.js!./Argument.less", function() {
+				var newContent = require("!!./../../../../node_modules/css-loader/index.js!./../../../../node_modules/less-loader/index.js!./Argument.less");
 				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
 				update(newContent);
 			});
@@ -21342,13 +21398,53 @@
 
 
 	// module
-	exports.push([module.id, ".RT-Argument-SupportList-hidden {\n  visibility: hidden;\n}\n", ""]);
+	exports.push([module.id, ".RT-Argument-menu {\n  margin-bottom: 10px;\n}\n.RT-Argument-SupportList-hidden {\n  display: none;\n}\n", ""]);
 
 	// exports
 
 
 /***/ },
 /* 170 */
+/***/ function(module, exports, __webpack_require__) {
+
+	// style-loader: Adds some css to the DOM by adding a <style> tag
+
+	// load the styles
+	var content = __webpack_require__(171);
+	if(typeof content === 'string') content = [[module.id, content, '']];
+	// add the styles to the DOM
+	var update = __webpack_require__(167)(content, {});
+	if(content.locals) module.exports = content.locals;
+	// Hot Module Replacement
+	if(false) {
+		// When the styles change, update the <style> tags
+		if(!content.locals) {
+			module.hot.accept("!!./../../../../node_modules/css-loader/index.js!./../../../../node_modules/less-loader/index.js!./ProConContainer.less", function() {
+				var newContent = require("!!./../../../../node_modules/css-loader/index.js!./../../../../node_modules/less-loader/index.js!./ProConContainer.less");
+				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+				update(newContent);
+			});
+		}
+		// When the module is disposed, remove the <style> tags
+		module.hot.dispose(function() { update(); });
+	}
+
+/***/ },
+/* 171 */
+/***/ function(module, exports, __webpack_require__) {
+
+	exports = module.exports = __webpack_require__(166)();
+	// imports
+
+
+	// module
+	exports.push([module.id, ".RT-ProConContainer-addProConButton:hover {\n  cursor: pointer;\n}\n", ""]);
+
+	// exports
+
+
+/***/ },
+/* 172 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -21371,9 +21467,9 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	__webpack_require__(171);
+	__webpack_require__(173);
 
-	var _jquery = __webpack_require__(173);
+	var _jquery = __webpack_require__(175);
 
 	var _jquery2 = _interopRequireDefault(_jquery);
 
@@ -21441,13 +21537,13 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 171 */
+/* 173 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 
 	// load the styles
-	var content = __webpack_require__(172);
+	var content = __webpack_require__(174);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
 	var update = __webpack_require__(167)(content, {});
@@ -21456,8 +21552,8 @@
 	if(false) {
 		// When the styles change, update the <style> tags
 		if(!content.locals) {
-			module.hot.accept("!!./../../../node_modules/css-loader/index.js!./../../../node_modules/less-loader/index.js!./Topics.less", function() {
-				var newContent = require("!!./../../../node_modules/css-loader/index.js!./../../../node_modules/less-loader/index.js!./Topics.less");
+			module.hot.accept("!!./../../../../node_modules/css-loader/index.js!./../../../../node_modules/less-loader/index.js!./Topics.less", function() {
+				var newContent = require("!!./../../../../node_modules/css-loader/index.js!./../../../../node_modules/less-loader/index.js!./Topics.less");
 				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
 				update(newContent);
 			});
@@ -21467,7 +21563,7 @@
 	}
 
 /***/ },
-/* 172 */
+/* 174 */
 /***/ function(module, exports, __webpack_require__) {
 
 	exports = module.exports = __webpack_require__(166)();
@@ -21481,7 +21577,7 @@
 
 
 /***/ },
-/* 173 */
+/* 175 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
@@ -30697,13 +30793,13 @@
 
 
 /***/ },
-/* 174 */
+/* 176 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 
 	// load the styles
-	var content = __webpack_require__(175);
+	var content = __webpack_require__(177);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
 	var update = __webpack_require__(167)(content, {});
@@ -30712,8 +30808,8 @@
 	if(false) {
 		// When the styles change, update the <style> tags
 		if(!content.locals) {
-			module.hot.accept("!!./../../node_modules/css-loader/index.js!./../../node_modules/less-loader/index.js!./Page.less", function() {
-				var newContent = require("!!./../../node_modules/css-loader/index.js!./../../node_modules/less-loader/index.js!./Page.less");
+			module.hot.accept("!!./../../../node_modules/css-loader/index.js!./../../../node_modules/less-loader/index.js!./Page.less", function() {
+				var newContent = require("!!./../../../node_modules/css-loader/index.js!./../../../node_modules/less-loader/index.js!./Page.less");
 				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
 				update(newContent);
 			});
@@ -30723,7 +30819,7 @@
 	}
 
 /***/ },
-/* 175 */
+/* 177 */
 /***/ function(module, exports, __webpack_require__) {
 
 	exports = module.exports = __webpack_require__(166)();
@@ -30737,7 +30833,7 @@
 
 
 /***/ },
-/* 176 */
+/* 178 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_RESULT__;/* WEBPACK VAR INJECTION */(function(module, global, process) {// Copyright (c) Microsoft Open Technologies, Inc. All rights reserved. See License.txt in the project root for license information.
@@ -41464,10 +41560,10 @@
 
 	}.call(this));
 
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(177)(module), (function() { return this; }()), __webpack_require__(3)))
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(179)(module), (function() { return this; }()), __webpack_require__(3)))
 
 /***/ },
-/* 177 */
+/* 179 */
 /***/ function(module, exports) {
 
 	module.exports = function(module) {
@@ -41483,13 +41579,13 @@
 
 
 /***/ },
-/* 178 */
+/* 180 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 
 	// load the styles
-	var content = __webpack_require__(179);
+	var content = __webpack_require__(181);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
 	var update = __webpack_require__(167)(content, {});
@@ -41509,7 +41605,7 @@
 	}
 
 /***/ },
-/* 179 */
+/* 181 */
 /***/ function(module, exports, __webpack_require__) {
 
 	exports = module.exports = __webpack_require__(166)();

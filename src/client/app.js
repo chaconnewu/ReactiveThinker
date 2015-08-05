@@ -1,5 +1,5 @@
 import React from 'react';
-import Page from './Page';
+import Page from './ProConPage/Page';
 import Rx from 'rx';
 import "./app.less";
 

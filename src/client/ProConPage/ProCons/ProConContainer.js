@@ -1,5 +1,6 @@
 import React from 'react';
 import ProConPair from './ProConPair';
+import './ProConContainer.less'
 
 var proconData = [
   {
@@ -37,10 +38,37 @@ var proconData = [
 ];
 
 class ProConContainer extends React.Component {
+  constructor (props) {
+      super(props);
+      var self = this;
+      self.state = {
+        proconData : proconData
+      };
+  }
+
+  addProConPair () {
+    var self = this;
+    var proconPair = {
+      pro : {
+        claim : 'This is a new pro',
+        supports : []
+      },
+      con : {
+        claim : 'This is a new con',
+        supports : []
+      }
+    }
+
+    var proconData = self.state.proconData;
+    proconData.splice(0, 0, proconPair);
+    self.setState({
+      proconData
+    });
+  }
 
   render () {
     var self = this;
-    var proConPairs = proconData.map(function(procon, index) {
+    var proConPairs = self.state.proconData.map(function(procon, index) {
       return <ProConPair key={ index } procon={ procon } />;
     });
 
@@ -54,6 +82,17 @@ class ProConContainer extends React.Component {
             </div>
             <div className='five wide column'>
               <h2 className='ui header'>Con</h2>
+            </div>
+          </div>
+          <div className='ui row'>
+            <div className='one wide column'></div>
+            <div
+              className='RT-ProConContainer-addProConButton three wide column'
+              onClick={ self.addProConPair.bind(self) }
+            >
+              <i className='large plus icon' />
+              <span>Add a Pro & Con pair ...</span>
+
             </div>
           </div>
         </div>
