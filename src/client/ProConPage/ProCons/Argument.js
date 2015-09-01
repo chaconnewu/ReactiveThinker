@@ -13,6 +13,8 @@ class Argument extends React.Component {
   }
 
   addSupport () {
+    var self = this;
+
 
   }
 
@@ -49,7 +51,7 @@ class Argument extends React.Component {
       <div>
         <AceEditor
           initialContent={ self.props.argument.claim }
-          type={AceEditor.Types.CLAIM}
+          type={ AceEditor.Types.CLAIM }
         />
         <div className="RT-Argument-menu">
           <i

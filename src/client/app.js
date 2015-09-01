@@ -1,7 +1,10 @@
+import configureStore from './store/configureStore';
 import React from 'react';
+import { Provider } from 'react-redux';
 import Page from './ProConPage/Page';
-import Rx from 'rx';
 import "./app.less";
+
+const store = configureStore();
 
 var App = React.createClass({
   render () {
@@ -11,4 +14,11 @@ var App = React.createClass({
   }
 });
 
-React.render(<App />, document.getElementById('app'));
+React.render(
+  <Provider store={store}>
+    {() => <App />}
+  </Provider>,
+  document.getElementById('app')
+);
+
+// React.render(<App />, document.getElementById('app'));

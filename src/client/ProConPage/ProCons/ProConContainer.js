@@ -1,6 +1,6 @@
 import React from 'react';
 import ProConPair from './ProConPair';
-import './ProConContainer.less'
+import './ProConContainer.less';
 
 var proconData = [
   {
@@ -57,7 +57,7 @@ class ProConContainer extends React.Component {
         claim : 'This is a new con',
         supports : []
       }
-    }
+    };
 
     var proconData = self.state.proconData;
     proconData.splice(0, 0, proconPair);
