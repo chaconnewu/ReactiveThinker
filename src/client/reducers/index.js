@@ -1,8 +1,8 @@
 import { combineReducers } from 'redux';
-import procon from './ProCon.js';
+import procons from './procons.js';
 
 const rootReducer = combineReducers({
-  procon
+  procons
 });
 
 export default rootReducer;

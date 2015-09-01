@@ -1,24 +1,33 @@
-import configureStore from './store/configureStore';
-import React from 'react';
-import { Provider } from 'react-redux';
+import React, { Component, PropTypes } from 'react';
+import { bindActionCreators } from 'redux';
+import { connect, Provider } from 'react-redux';
+
+import * as ProConActions from './actions/procon';
 import Page from './ProConPage/Page';
 import "./app.less";
 
-const store = configureStore();
-
-var App = React.createClass({
+class App extends Component {
   render () {
+    const { procons, dispatch } = this.props;
+    const actions = bindActionCreators(ProConActions, dispatch);
     return (
-      <Page />
+      <Page
+        actions={ actions }
+        procons={ procons }
+      />
     );
   }
-});
+}
 
-React.render(
-  <Provider store={store}>
-    {() => <App />}
-  </Provider>,
-  document.getElementById('app')
-);
+App.propTypes = {
+  dispatch: PropTypes.func.isRequired,
+  procons: PropTypes.array.isRequired
+};
 
-// React.render(<App />, document.getElementById('app'));
+function mapStateToProps(state) {
+  return {
+    procons: state.procons
+  };
+}
+
+export default connect(mapStateToProps)(App);

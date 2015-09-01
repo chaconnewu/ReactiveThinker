@@ -1,4 +1,5 @@
-export constant ADD_PROCON = 'ADD_PROCON';
-export constant DELETE_PROCON = 'DELETE_PROCON';
-export constant ADD_SUPPORT = 'ADD_SUPPORT';
-export constant DELETE_SUPPORT = 'DELETE_SUPPORT';
+export const ADD_PROCON = 'ADD_PROCON';
+export const DELETE_PROCON = 'DELETE_PROCON';
+export const ADD_SUPPORT = 'ADD_SUPPORT';
+export const DELETE_SUPPORT = 'DELETE_SUPPORT';
+export const UPDATE_SUPPORT = 'UPDATE_SUPPORT';

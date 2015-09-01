@@ -1,3 +1,6 @@
+import * as _ from 'lodash';
+import { ADD_PROCON } from '../constants/ActionTypes';
+
 const initialState = [
   {
     pro : {
@@ -33,9 +36,20 @@ const initialState = [
   }
 ];
 
-export default function procon(state=initialState, action) {
+export default function procons(state=initialState, action) {
   switch (action.type) {
-    default:
-      return state;
+  case ADD_PROCON:
+    return [{
+      pro: {
+        claim: '',
+        supports: []
+      },
+      con: {
+        claim: '',
+        supports: []
+      }
+    }, ...state];
+  default:
+    return state;
   }
 }
