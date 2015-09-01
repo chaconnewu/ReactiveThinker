@@ -12,10 +12,10 @@ export function addSupport(proconIdx, side) {
   return { type: types.ADD_SUPPORT, proconIdx, side };
 }
 
-export function deleteSupport(proconIdx, side) {
-  return { type: types.DELETE_SUPPORT, proconIdx, side };
+export function deleteSupport(proconIdx, side, supportIdx) {
+  return { type: types.DELETE_SUPPORT, proconIdx, side, supportIdx };
 }
 
-export function updateSupport(proconIdx, side, text) {
-  return { type: types.UPDATE_SUPPORT, proconIdx, side, text };
+export function updateSupport(proconIdx, side, supportIdx, text) {
+  return { type: types.UPDATE_SUPPORT, proconIdx, side, supportIdx, text };
 }

@@ -1,10 +1,10 @@
-import React from 'react';
+import React, { Component, PropTypes } from 'react';
 import ProConPair from './ProConPair';
 import './ProConContainer.less';
 
-class ProConContainer extends React.Component {
+class ProConContainer extends Component {
   constructor (props) {
-      super(props);
+    super(props);
   }
 
   addProConPair () {
@@ -14,7 +14,14 @@ class ProConContainer extends React.Component {
   render () {
     var self = this;
     var proConPairs = self.props.procons.map(function(procon, index) {
-      return <ProConPair key={ index } procon={ procon } />;
+      return (
+        <ProConPair
+          addSupport={ self.props.actions.addSupport }
+          key={ index }
+          proconIdx={ index }
+          procon={ procon }
+        />
+      );
     });
 
     return (
@@ -46,4 +53,8 @@ class ProConContainer extends React.Component {
   }
 }
 
+ProConContainer.propTypes = {
+  actions: PropTypes.object.isRequired,
+  procons: PropTypes.array.isRequired
+}
 export default ProConContainer;

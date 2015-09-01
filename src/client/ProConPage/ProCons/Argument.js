@@ -1,9 +1,9 @@
-import React from 'react';
+import React, { Component, PropTypes } from 'react';
 import AceEditor from './AceEditor';
 import './Argument.less';
 
 
-class Argument extends React.Component {
+class Argument extends Component {
   constructor (props) {
     super(props);
     var self = this;
@@ -13,9 +13,10 @@ class Argument extends React.Component {
   }
 
   addSupport () {
-    var self = this;
-
-
+    var proconIdx = this.props.proconIdx;
+    var side = this.props.side;
+    console.log(side);
+    this.props.addSupport(proconIdx, side);
   }
 
   toggleSupportList () {
@@ -41,6 +42,7 @@ class Argument extends React.Component {
       return (
         <AceEditor
           key={ index }
+          supportIdx={ index }
           initialContent={ support }
           type={AceEditor.Types.SUPPORT}
         />
@@ -71,4 +73,10 @@ class Argument extends React.Component {
   }
 }
 
+Argument.propTypes = {
+  addSupport: PropTypes.func.isRequired,
+  argument: PropTypes.object.isRequired,
+  proconIdx: PropTypes.number.isRequired,
+  side: PropTypes.string.isRequired
+}
 export default Argument;

@@ -21824,12 +21824,12 @@
 	  return { type: types.ADD_SUPPORT, proconIdx: proconIdx, side: side };
 	}
 
-	function deleteSupport(proconIdx, side) {
-	  return { type: types.DELETE_SUPPORT, proconIdx: proconIdx, side: side };
+	function deleteSupport(proconIdx, side, supportIdx) {
+	  return { type: types.DELETE_SUPPORT, proconIdx: proconIdx, side: side, supportIdx: supportIdx };
 	}
 
-	function updateSupport(proconIdx, side, text) {
-	  return { type: types.UPDATE_SUPPORT, proconIdx: proconIdx, side: side, text: text };
+	function updateSupport(proconIdx, side, supportIdx, text) {
+	  return { type: types.UPDATE_SUPPORT, proconIdx: proconIdx, side: side, supportIdx: supportIdx, text: text };
 	}
 
 /***/ },
@@ -22028,8 +22028,8 @@
 
 	__webpack_require__(194);
 
-	var ProConContainer = (function (_React$Component) {
-	  _inherits(ProConContainer, _React$Component);
+	var ProConContainer = (function (_Component) {
+	  _inherits(ProConContainer, _Component);
 
 	  function ProConContainer(props) {
 	    _classCallCheck(this, ProConContainer);
@@ -22047,7 +22047,12 @@
 	    value: function render() {
 	      var self = this;
 	      var proConPairs = self.props.procons.map(function (procon, index) {
-	        return _react2['default'].createElement(_ProConPair2['default'], { key: index, procon: procon });
+	        return _react2['default'].createElement(_ProConPair2['default'], {
+	          addSupport: self.props.actions.addSupport,
+	          key: index,
+	          proconIdx: index,
+	          procon: procon
+	        });
 	      });
 
 	      return _react2['default'].createElement(
@@ -22104,8 +22109,12 @@
 	  }]);
 
 	  return ProConContainer;
-	})(_react2['default'].Component);
+	})(_react.Component);
 
+	ProConContainer.propTypes = {
+	  actions: _react.PropTypes.object.isRequired,
+	  procons: _react.PropTypes.array.isRequired
+	};
 	exports['default'] = ProConContainer;
 	module.exports = exports['default'];
 
@@ -22137,8 +22146,8 @@
 
 	var _Argument2 = _interopRequireDefault(_Argument);
 
-	var ProConPair = (function (_React$Component) {
-	  _inherits(ProConPair, _React$Component);
+	var ProConPair = (function (_Component) {
+	  _inherits(ProConPair, _Component);
 
 	  function ProConPair() {
 	    _classCallCheck(this, ProConPair);
@@ -22150,7 +22159,6 @@
 	    key: 'render',
 	    value: function render() {
 	      var self = this;
-
 	      return _react2['default'].createElement(
 	        'div',
 	        { className: 'ui grid' },
@@ -22161,12 +22169,22 @@
 	          _react2['default'].createElement(
 	            'div',
 	            { className: 'five wide column' },
-	            _react2['default'].createElement(_Argument2['default'], { argument: self.props.procon.pro })
+	            _react2['default'].createElement(_Argument2['default'], {
+	              addSupport: self.props.addSupport,
+	              argument: self.props.procon.pro,
+	              proconIdx: self.props.proconIdx,
+	              side: 'pro'
+	            })
 	          ),
 	          _react2['default'].createElement(
 	            'div',
 	            { className: 'five wide column' },
-	            _react2['default'].createElement(_Argument2['default'], { argument: self.props.procon.con })
+	            _react2['default'].createElement(_Argument2['default'], {
+	              addSupport: self.props.addSupport,
+	              argument: self.props.procon.con,
+	              proconIdx: self.props.proconIdx,
+	              side: 'con'
+	            })
 	          )
 	        )
 	      );
@@ -22174,7 +22192,13 @@
 	  }]);
 
 	  return ProConPair;
-	})(_react2['default'].Component);
+	})(_react.Component);
+
+	ProConPair.propTypes = {
+	  addSupport: _react.PropTypes.func.isRequired,
+	  procon: _react.PropTypes.object.isRequired,
+	  proconIdx: _react.PropTypes.number.isRequired
+	};
 
 	exports['default'] = ProConPair;
 	module.exports = exports['default'];
@@ -22209,8 +22233,8 @@
 
 	__webpack_require__(192);
 
-	var Argument = (function (_React$Component) {
-	  _inherits(Argument, _React$Component);
+	var Argument = (function (_Component) {
+	  _inherits(Argument, _Component);
 
 	  function Argument(props) {
 	    _classCallCheck(this, Argument);
@@ -22225,7 +22249,10 @@
 	  _createClass(Argument, [{
 	    key: 'addSupport',
 	    value: function addSupport() {
-	      var self = this;
+	      var proconIdx = this.props.proconIdx;
+	      var side = this.props.side;
+	      console.log(side);
+	      this.props.addSupport(proconIdx, side);
 	    }
 	  }, {
 	    key: 'toggleSupportList',
@@ -22252,6 +22279,7 @@
 	      var supports = self.props.argument.supports.map(function (support, index) {
 	        return _react2['default'].createElement(_AceEditor2['default'], {
 	          key: index,
+	          supportIdx: index,
 	          initialContent: support,
 	          type: _AceEditor2['default'].Types.SUPPORT
 	        });
@@ -22286,8 +22314,14 @@
 	  }]);
 
 	  return Argument;
-	})(_react2['default'].Component);
+	})(_react.Component);
 
+	Argument.propTypes = {
+	  addSupport: _react.PropTypes.func.isRequired,
+	  argument: _react.PropTypes.object.isRequired,
+	  proconIdx: _react.PropTypes.number.isRequired,
+	  side: _react.PropTypes.string.isRequired
+	};
 	exports['default'] = Argument;
 	module.exports = exports['default'];
 
@@ -22807,7 +22841,7 @@
 	        _react2['default'].createElement(
 	          'div',
 	          { className: 'seven wide column' },
-	          'Copyright ©2015, CSCL Lab @ The Pennsylvania State University'
+	          'Copyright ©2015, CSCL Lab @ The Pennsylvania State University, Developed by Yu Wu'
 	        )
 	      );
 	    }
@@ -44679,6 +44713,11 @@
 	          supports: []
 	        }
 	      }].concat(_toConsumableArray(state));
+	    case _constantsActionTypes.ADD_SUPPORT:
+	      var stateCopy = _.cloneDeep(state);
+	      var origin = stateCopy[action.proconIdx][action.side].supports;
+	      stateCopy[action.proconIdx][action.side].supports = [''].concat(_toConsumableArray(origin));
+	      return stateCopy;
 	    default:
 	      return state;
 	  }
