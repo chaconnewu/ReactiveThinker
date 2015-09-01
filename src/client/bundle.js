@@ -22251,7 +22251,6 @@
 	    value: function addSupport() {
 	      var proconIdx = this.props.proconIdx;
 	      var side = this.props.side;
-	      console.log(side);
 	      this.props.addSupport(proconIdx, side);
 	    }
 	  }, {
@@ -22372,7 +22371,7 @@
 	      self.editor = ace.edit(_react2['default'].findDOMNode(self));
 	      // Set the editor mode to text
 	      self.editor.getSession().setMode("ace/mode/text");
-	      // Wrop line
+	      // Wrap line
 	      self.editor.getSession().setUseWrapMode(true);
 	      // Hide the left bar (Gutter)
 	      self.editor.renderer.setShowGutter(false);
@@ -44678,25 +44677,7 @@
 
 	var _constantsActionTypes = __webpack_require__(181);
 
-	var initialState = [{
-	  pro: {
-	    claim: 'This is pro claim 1',
-	    supports: ['This is support 1 for pro claim 1', 'This is support 2 for pro claim 1', 'This is support 3 for pro claim 1']
-	  },
-	  con: {
-	    claim: 'This is con claim 1',
-	    supports: ['This is support 1 for con claim 1', 'This is support 2 for con claim 1']
-	  }
-	}, {
-	  pro: {
-	    claim: 'This is pro claim 2',
-	    supports: ['This is support 1 for pro claim 2']
-	  },
-	  con: {
-	    claim: 'This is con claim 2',
-	    supports: ['This is support 1 for con claim 2', 'This is support 2 for con claim 2']
-	  }
-	}];
+	var initialState = [];
 
 	function procons(state, action) {
 	  if (state === undefined) state = initialState;

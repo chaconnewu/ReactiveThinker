@@ -16,7 +16,7 @@ class AceEditor extends React.Component {
     self.editor = ace.edit(React.findDOMNode(self));
     // Set the editor mode to text
     self.editor.getSession().setMode("ace/mode/text");
-    // Wrop line
+    // Wrap line
     self.editor.getSession().setUseWrapMode(true);
     // Hide the left bar (Gutter)
     self.editor.renderer.setShowGutter(false);

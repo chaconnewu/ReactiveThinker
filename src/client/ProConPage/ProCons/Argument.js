@@ -15,7 +15,6 @@ class Argument extends Component {
   addSupport () {
     var proconIdx = this.props.proconIdx;
     var side = this.props.side;
-    console.log(side);
     this.props.addSupport(proconIdx, side);
   }
 
