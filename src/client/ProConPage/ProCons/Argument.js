@@ -44,6 +44,7 @@ class Argument extends React.Component {
         />
       );
     });
+
     return (
       <div>
         <AceEditor
@@ -56,7 +57,7 @@ class Argument extends React.Component {
             onClick={ self.toggleSupportList.bind(self) }
           />
           <i
-            className="large add circle icon"
+            className="large plus square outline icon"
             onClick={ self.addSupport.bind(self) }
           />
         </div>
