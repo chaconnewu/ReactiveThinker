@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { Component, PropTypes } from 'react';
+import { debounce, throttle } from 'lodash';
 import './AceEditor.less';
 
 var Types = {
@@ -6,12 +7,20 @@ var Types = {
   SUPPORT : 'Support'
 };
 
-class AceEditor extends React.Component {
+class AceEditor extends Component {
   constructor(props) {
     super(props);
   }
 
-  componentDidMount () {
+  onChange() {
+    var self = this;
+    if (self.props.onChange) {
+      var text = self.editor.getSession().getValue();
+      self.props.onChange(text);
+    }
+  }
+
+  componentDidMount() {
     var self = this;
     self.editor = ace.edit(React.findDOMNode(self));
     // Set the editor mode to text
@@ -24,6 +33,8 @@ class AceEditor extends React.Component {
     self.editor.setHighlightActiveLine(false);
     // Show content
     self.editor.setValue(self.props.initialContent, 1);
+    // Listen to 'change' event
+    self.editor.on('change', self.onChange.bind(self));
   }
 
   render () {
@@ -37,4 +48,8 @@ class AceEditor extends React.Component {
 }
 
 AceEditor.Types = Types;
+AceEditor.propTypes = {
+  onChange: PropTypes.func.isRequired
+}
+
 export default AceEditor;

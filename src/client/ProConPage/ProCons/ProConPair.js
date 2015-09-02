@@ -10,16 +10,15 @@ class ProConPair extends Component {
           <div className="one wide column"></div>
           <div className="five wide column">
             <Argument
-              addSupport={ self.props.addSupport }
+              actions={ self.props.actions }
               argument={ self.props.procon.pro }
               proconIdx={ self.props.proconIdx }
               side="pro"
             />
           </div>
-
           <div className="five wide column">
             <Argument
-              addSupport={ self.props.addSupport }
+              actions={ self.props.actions }
               argument={ self.props.procon.con }
               proconIdx={ self.props.proconIdx }
               side="con"
@@ -32,7 +31,7 @@ class ProConPair extends Component {
 }
 
 ProConPair.propTypes = {
-  addSupport: PropTypes.func.isRequired,
+  actions: PropTypes.object.isRequired,
   procon: PropTypes.object.isRequired,
   proconIdx: PropTypes.number.isRequired
 };

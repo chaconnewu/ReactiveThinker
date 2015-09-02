@@ -15,7 +15,7 @@ class Argument extends Component {
   addSupport () {
     var proconIdx = this.props.proconIdx;
     var side = this.props.side;
-    this.props.addSupport(proconIdx, side);
+    this.props.actions.addSupport(proconIdx, side);
   }
 
   toggleSupportList () {
@@ -27,6 +27,8 @@ class Argument extends Component {
 
   render () {
     var self = this;
+    var proconIdx = this.props.proconIdx;
+    var side = this.props.side;
     var iconClass, supportListClass;
 
     if (self.state.show) {
@@ -38,20 +40,30 @@ class Argument extends Component {
     }
 
     var supports = self.props.argument.supports.map(function(support, index) {
+      var updateSupport = function(text) {
+        return self.props.actions.updateSupport.apply(this, [proconIdx, side, index, text]);
+      };
       return (
         <AceEditor
-          key={ index }
+          key={ proconIdx.toString() + index.toString() + support }
           supportIdx={ index }
+          onChange={ updateSupport }
           initialContent={ support }
-          type={AceEditor.Types.SUPPORT}
+          type={ AceEditor.Types.SUPPORT }
         />
       );
     });
 
+    var updateClaim = function(text) {
+      return self.props.actions.updateSupport.apply(self, [proconIdx, side, null, text]);
+    };
+
     return (
       <div>
         <AceEditor
+          key={ proconIdx.toString() + side + self.props.argument.claim }
           initialContent={ self.props.argument.claim }
+          onChange={ updateClaim }
           type={ AceEditor.Types.CLAIM }
         />
         <div className="RT-Argument-menu">
@@ -73,7 +85,7 @@ class Argument extends Component {
 }
 
 Argument.propTypes = {
-  addSupport: PropTypes.func.isRequired,
+  actions: PropTypes.object.isRequired,
   argument: PropTypes.object.isRequired,
   proconIdx: PropTypes.number.isRequired,
   side: PropTypes.string.isRequired

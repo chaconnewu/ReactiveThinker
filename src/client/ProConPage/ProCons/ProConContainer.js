@@ -7,6 +7,27 @@ class ProConContainer extends Component {
     super(props);
   }
 
+  shouldComponentUpdate(nextProps, nextState) {
+    let shouldUpdate = false;
+
+    if (this.props.procons.length === nextProps.procons.length) {
+      for (let i = 0; i < this.props.procons.length; i++) {
+        if (this.props.procons[i].pro.supports.length !== nextProps.procons[i].pro.supports.length) {
+          shouldUpdate = true;
+          break;
+        }
+        if (this.props.procons[i].con.supports.length !== nextProps.procons[i].con.supports.length) {
+          shouldUpdate = true;
+          break;
+        }
+      }
+    } else {
+      shouldUpdate = true;
+    }
+
+    return shouldUpdate;
+  }
+
   addProConPair () {
     this.props.actions.addProCon();
   }
@@ -16,7 +37,7 @@ class ProConContainer extends Component {
     var proConPairs = self.props.procons.map(function(procon, index) {
       return (
         <ProConPair
-          addSupport={ self.props.actions.addSupport }
+          actions={ self.props.actions }
           key={ index }
           proconIdx={ index }
           procon={ procon }

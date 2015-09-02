@@ -22038,6 +22038,28 @@
 	  }
 
 	  _createClass(ProConContainer, [{
+	    key: 'shouldComponentUpdate',
+	    value: function shouldComponentUpdate(nextProps, nextState) {
+	      var shouldUpdate = false;
+
+	      if (this.props.procons.length === nextProps.procons.length) {
+	        for (var i = 0; i < this.props.procons.length; i++) {
+	          if (this.props.procons[i].pro.supports.length !== nextProps.procons[i].pro.supports.length) {
+	            shouldUpdate = true;
+	            break;
+	          }
+	          if (this.props.procons[i].con.supports.length !== nextProps.procons[i].con.supports.length) {
+	            shouldUpdate = true;
+	            break;
+	          }
+	        }
+	      } else {
+	        shouldUpdate = true;
+	      }
+
+	      return shouldUpdate;
+	    }
+	  }, {
 	    key: 'addProConPair',
 	    value: function addProConPair() {
 	      this.props.actions.addProCon();
@@ -22048,7 +22070,7 @@
 	      var self = this;
 	      var proConPairs = self.props.procons.map(function (procon, index) {
 	        return _react2['default'].createElement(_ProConPair2['default'], {
-	          addSupport: self.props.actions.addSupport,
+	          actions: self.props.actions,
 	          key: index,
 	          proconIdx: index,
 	          procon: procon
@@ -22170,7 +22192,7 @@
 	            'div',
 	            { className: 'five wide column' },
 	            _react2['default'].createElement(_Argument2['default'], {
-	              addSupport: self.props.addSupport,
+	              actions: self.props.actions,
 	              argument: self.props.procon.pro,
 	              proconIdx: self.props.proconIdx,
 	              side: 'pro'
@@ -22180,7 +22202,7 @@
 	            'div',
 	            { className: 'five wide column' },
 	            _react2['default'].createElement(_Argument2['default'], {
-	              addSupport: self.props.addSupport,
+	              actions: self.props.actions,
 	              argument: self.props.procon.con,
 	              proconIdx: self.props.proconIdx,
 	              side: 'con'
@@ -22195,7 +22217,7 @@
 	})(_react.Component);
 
 	ProConPair.propTypes = {
-	  addSupport: _react.PropTypes.func.isRequired,
+	  actions: _react.PropTypes.object.isRequired,
 	  procon: _react.PropTypes.object.isRequired,
 	  proconIdx: _react.PropTypes.number.isRequired
 	};
@@ -22251,7 +22273,7 @@
 	    value: function addSupport() {
 	      var proconIdx = this.props.proconIdx;
 	      var side = this.props.side;
-	      this.props.addSupport(proconIdx, side);
+	      this.props.actions.addSupport(proconIdx, side);
 	    }
 	  }, {
 	    key: 'toggleSupportList',
@@ -22265,6 +22287,8 @@
 	    key: 'render',
 	    value: function render() {
 	      var self = this;
+	      var proconIdx = this.props.proconIdx;
+	      var side = this.props.side;
 	      var iconClass, supportListClass;
 
 	      if (self.state.show) {
@@ -22276,19 +22300,29 @@
 	      }
 
 	      var supports = self.props.argument.supports.map(function (support, index) {
+	        var updateSupport = function updateSupport(text) {
+	          return self.props.actions.updateSupport.apply(this, [proconIdx, side, index, text]);
+	        };
 	        return _react2['default'].createElement(_AceEditor2['default'], {
-	          key: index,
+	          key: proconIdx.toString() + index.toString() + support,
 	          supportIdx: index,
+	          onChange: updateSupport,
 	          initialContent: support,
 	          type: _AceEditor2['default'].Types.SUPPORT
 	        });
 	      });
 
+	      var updateClaim = function updateClaim(text) {
+	        return self.props.actions.updateSupport.apply(self, [proconIdx, side, null, text]);
+	      };
+
 	      return _react2['default'].createElement(
 	        'div',
 	        null,
 	        _react2['default'].createElement(_AceEditor2['default'], {
+	          key: proconIdx.toString() + side + self.props.argument.claim,
 	          initialContent: self.props.argument.claim,
+	          onChange: updateClaim,
 	          type: _AceEditor2['default'].Types.CLAIM
 	        }),
 	        _react2['default'].createElement(
@@ -22316,7 +22350,7 @@
 	})(_react.Component);
 
 	Argument.propTypes = {
-	  addSupport: _react.PropTypes.func.isRequired,
+	  actions: _react.PropTypes.object.isRequired,
 	  argument: _react.PropTypes.object.isRequired,
 	  proconIdx: _react.PropTypes.number.isRequired,
 	  side: _react.PropTypes.string.isRequired
@@ -22348,6 +22382,8 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
+	var _lodash = __webpack_require__(205);
+
 	__webpack_require__(188);
 
 	var Types = {
@@ -22355,8 +22391,8 @@
 	  SUPPORT: 'Support'
 	};
 
-	var AceEditor = (function (_React$Component) {
-	  _inherits(AceEditor, _React$Component);
+	var AceEditor = (function (_Component) {
+	  _inherits(AceEditor, _Component);
 
 	  function AceEditor(props) {
 	    _classCallCheck(this, AceEditor);
@@ -22365,6 +22401,15 @@
 	  }
 
 	  _createClass(AceEditor, [{
+	    key: 'onChange',
+	    value: function onChange() {
+	      var self = this;
+	      if (self.props.onChange) {
+	        var text = self.editor.getSession().getValue();
+	        self.props.onChange(text);
+	      }
+	    }
+	  }, {
 	    key: 'componentDidMount',
 	    value: function componentDidMount() {
 	      var self = this;
@@ -22379,6 +22424,8 @@
 	      self.editor.setHighlightActiveLine(false);
 	      // Show content
 	      self.editor.setValue(self.props.initialContent, 1);
+	      // Listen to 'change' event
+	      self.editor.on('change', self.onChange.bind(self));
 	    }
 	  }, {
 	    key: 'render',
@@ -22390,9 +22437,13 @@
 	  }]);
 
 	  return AceEditor;
-	})(_react2['default'].Component);
+	})(_react.Component);
 
 	AceEditor.Types = Types;
+	AceEditor.propTypes = {
+	  onChange: _react.PropTypes.func.isRequired
+	};
+
 	exports['default'] = AceEditor;
 	module.exports = exports['default'];
 
@@ -44684,7 +44735,7 @@
 
 	  switch (action.type) {
 	    case _constantsActionTypes.ADD_PROCON:
-	      return [{
+	      var newState = [{
 	        pro: {
 	          claim: '',
 	          supports: []
@@ -44694,11 +44745,23 @@
 	          supports: []
 	        }
 	      }].concat(_toConsumableArray(state));
+	      return newState;
+
 	    case _constantsActionTypes.ADD_SUPPORT:
 	      var stateCopy = _.cloneDeep(state);
 	      var origin = stateCopy[action.proconIdx][action.side].supports;
 	      stateCopy[action.proconIdx][action.side].supports = [''].concat(_toConsumableArray(origin));
 	      return stateCopy;
+
+	    case _constantsActionTypes.UPDATE_SUPPORT:
+	      var stateCopy = _.cloneDeep(state);
+	      if (action.supportIdx === null) {
+	        stateCopy[action.proconIdx][action.side].claim = action.text;
+	      } else {
+	        stateCopy[action.proconIdx][action.side].supports[action.supportIdx] = action.text;
+	      }
+	      return stateCopy;
+
 	    default:
 	      return state;
 	  }
