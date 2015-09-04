@@ -4,7 +4,7 @@ var React = require('react');
 
 var config = {
   cache: true,
-  entry: path.resolve(__dirname, './src/client/index.js'),
+  entry: path.resolve(__dirname, './src/client/root.js'),
   output: {
     path: path.resolve(__dirname, ''),
     filename: './src/client/bundle.js'
