@@ -1,21 +1,15 @@
 import React from 'react/addons';
 import { Component, PropTypes } from 'react';
-import * as Router from 'react-router';
+import { Redirect, Router, Route, Link, Navigation, Lifecycle } from 'react-router';
 import reactMixin from 'react-mixin';
 import './index.js';
 import Auth from './services/Auth.js';
+import ProviderWrapper from './index.js';
 
 import './root.less';
 
 let { LinkedStateMixin } = React.addons;
 
-var {
-  Route,
-  DefaultRoute,
-  NotFoundRoute,
-  RouteHandler,
-  Link
-} = Router;
 
 var courses = ['IST110H1', 'IST330', 'IST110H2'];
 
@@ -27,29 +21,34 @@ class Login extends Component {
   }
 }
 
-class LoginForm extends Component {
-  constructor() {
-    super();
-    this.state = {
+// Using ES5 because ES6 currently does not support mixins
+var LoginForm = React.createClass({
+  mixins: [ Lifecycle, LinkedStateMixin, Navigation ],
+
+  getInitialState() {
+    return {
       username: '',
-      password: '',
-      loginErr: false
+      password: ''
     };
-  }
+  },
+
+  routerWillLeave(nextLocation) {
+
+  },
 
   login(e) {
     var self = this;
     e.preventDefault();
     Auth.login(this.state.username, this.state.password)
     .then(function(res) {
-      console.log(res);
+      self.transitionTo('/app');
     })
     .fail(function(err) {
       self.setState({
         loginErr: true
       });
     });
-  }
+  },
 
   render() {
     return (
@@ -87,23 +86,21 @@ class LoginForm extends Component {
                   </label>
                 </div>
 
-                <div className="ui primary button" onClick={ this.login.bind(this) }>Login</div>
+                <div className="ui primary button" onClick={ this.login }>Login</div>
               </form>
             </div>
           </div>
       </div>
     );
   }
-}
-
-reactMixin(LoginForm.prototype, LinkedStateMixin);
-
-var routes = (
-  <Route path="/" handler={LoginForm}>
-    <Route name="login" path="/login" handler={ Login }/>
-  </Route>
-);
-
-Router.run(routes, function (Handler) {
-  React.render(<Handler/>, document.getElementById('app'));
 });
+
+React.render((
+    <Router>
+      <Route path="/" component={ LoginForm } ></Route>
+      <Route path="/app" component={ ProviderWrapper } ></Route>
+      <Redirect from="/" to="/app" />
+    </Router>
+  ),
+  document.getElementById('app')
+);

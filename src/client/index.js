@@ -5,9 +5,19 @@ import App from './app';
 
 const store = configureStore();
 
+class ProviderWrapper extends React.Component {
+  render() {
+    return (
+        <Provider store={store}>
+          {() => <App />}
+        </Provider>
+    );
+  }
+}
+
 React.render(
-  <Provider store={store}>
-    {() => <App />}
-  </Provider>,
+  <ProviderWrapper />,
   document.getElementById('app')
 );
+
+export default ProviderWrapper;
