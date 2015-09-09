@@ -24,7 +24,11 @@ app.get('/', function(req, res) {
 app.post('/login', function(req, res) {
   psuauth(req.body.username, req.body.password)
   .then(function(userInfo) {
-    res.status(201).send('success!');
+    res.status(201).send({
+      displayName: userInfo.displayName,
+      email: userInfo.mail,
+      uid: userInfo.uid
+    });
   })
   .fail(function(err) {
     res.status(401).send(err);

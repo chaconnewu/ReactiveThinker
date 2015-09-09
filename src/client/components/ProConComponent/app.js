@@ -2,7 +2,7 @@ import React, { Component, PropTypes } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect, Provider } from 'react-redux';
 
-import * as ProConActions from './actions/procon';
+import * as ProConActions from '../../actions/procon';
 import Page from './ProConPage/Page';
 import "./app.less";
 

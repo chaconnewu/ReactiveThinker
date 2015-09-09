@@ -2,24 +2,17 @@ import React from 'react/addons';
 import { Component, PropTypes } from 'react';
 import { Redirect, Router, Route, Link, Navigation, Lifecycle } from 'react-router';
 import reactMixin from 'react-mixin';
-import './index.js';
 import Auth from './services/Auth.js';
-import ProviderWrapper from './index.js';
+import * as components from './components';
+
+const { ProConProvider } = components;
 
 import './root.less';
 
 let { LinkedStateMixin } = React.addons;
 
-
+// unused for now
 var courses = ['IST110H1', 'IST330', 'IST110H2'];
-
-class Login extends Component {
-  render() {
-    return (
-      <div>Logged in</div>
-    );
-  }
-}
 
 // Using ES5 because ES6 currently does not support mixins
 var LoginForm = React.createClass({
@@ -41,7 +34,7 @@ var LoginForm = React.createClass({
     e.preventDefault();
     Auth.login(this.state.username, this.state.password)
     .then(function(res) {
-      self.transitionTo('/app');
+      self.transitionTo('/app', { userInfo: res },  { userInfo: res });
     })
     .fail(function(err) {
       self.setState({
@@ -63,7 +56,7 @@ var LoginForm = React.createClass({
             <div className="four wide column"></div>
             <div className="six wide column">
               <h1 className="ui header">Please login to continue</h1>
-              <form className="ui form" action="/login" method="post">
+              <form className="ui form">
                 <div className="required field">
                   <label>Penn State id (e.g. xyz123)</label>
 
@@ -98,7 +91,7 @@ var LoginForm = React.createClass({
 React.render((
     <Router>
       <Route path="/" component={ LoginForm } ></Route>
-      <Route path="/app" component={ ProviderWrapper } ></Route>
+      <Route path="/app" component={ ProConProvider } ></Route>
       <Redirect from="/" to="/app" />
     </Router>
   ),
