@@ -12,6 +12,7 @@ class Argument extends Component {
     };
   }
 
+
   addSupport () {
     var proconIdx = this.props.proconIdx;
     var side = this.props.side;
@@ -39,13 +40,14 @@ class Argument extends Component {
       supportListClass = 'RT-Argument-SupportList-hidden';
     }
 
+    var len = self.props.argument.supports.length;
     var supports = self.props.argument.supports.map(function(support, index) {
       var updateSupport = function(text) {
         return self.props.actions.updateSupport.apply(this, [proconIdx, side, index, text]);
       };
       return (
         <AceEditor
-          key={ proconIdx.toString() + index.toString() + support }
+          key={ side + ' ' + proconIdx + ' ' + (len - index - 1) }
           supportIdx={ index }
           onChange={ updateSupport }
           initialContent={ support }

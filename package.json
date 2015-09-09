@@ -3,6 +3,7 @@
   "version": "0.0.1",
   "description": "",
   "dependencies": {
+    "body-parser": "^1.13.3",
     "brace": "^0.5.1",
     "css-loader": "^0.15.5",
     "express": "^4.13.3",
@@ -12,8 +13,10 @@
     "less-loader": "^2.2.0",
     "lodash": "^3.10.0",
     "node-libs-browser": "^0.5.2",
+    "psuauth": "0.0.4",
+    "q": "^1.4.1",
     "react": "^0.13.3",
-    "react-ace": "^2.0.2",
+    "react-mixin": "^1.7.0",
     "react-redux": "^2.0.0",
     "react-router": "^0.13.3",
     "redux": "^2.0.0",
@@ -21,7 +24,8 @@
     "redux-thunk": "^0.1.0",
     "rx": "^2.5.3",
     "style-loader": "^0.12.3",
-    "webpack": "^1.10.1"
+    "webpack": "^1.10.1",
+    "when": "^3.7.3"
   },
   "devDependencies": {
     "babel-core": "^5.8.19",
@@ -34,7 +38,7 @@
   "scripts": {
     "start": "npm run dev",
     "serve": "./node_modules/.bin/http-server -p 3000",
-    "dev": "webpack-dev-server --progress --colors --port 3010"
+    "dev": "webpack --progress --colors --watch"
   },
   "repository": {
     "type": "git",

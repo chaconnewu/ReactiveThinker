@@ -8,7 +8,7 @@ class ProConContainer extends Component {
   }
 
   shouldComponentUpdate(nextProps, nextState) {
-    let shouldUpdate = false;
+    var shouldUpdate = false;
 
     if (this.props.procons.length === nextProps.procons.length) {
       for (let i = 0; i < this.props.procons.length; i++) {
@@ -35,10 +35,11 @@ class ProConContainer extends Component {
   render () {
     var self = this;
     var proConPairs = self.props.procons.map(function(procon, index) {
+      var keyString = procon.id + ' ' + index.toString() + 'pro:' + procon.pro.claim + 'con:' + procon.con.claim;
       return (
         <ProConPair
           actions={ self.props.actions }
-          key={ index }
+          key={ keyString }
           proconIdx={ index }
           procon={ procon }
         />
