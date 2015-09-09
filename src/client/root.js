@@ -5,7 +5,10 @@ import reactMixin from 'react-mixin';
 import Auth from './services/Auth.js';
 import * as components from './components';
 
-const { ProConProvider } = components;
+const {
+  ProConApp,
+  ProConProvider
+} = components;
 
 import './root.less';
 
@@ -91,7 +94,9 @@ var LoginForm = React.createClass({
 React.render((
     <Router>
       <Route path="/" component={ LoginForm } ></Route>
-      <Route path="/app" component={ ProConProvider } ></Route>
+      <Route path="/app" component={ ProConProvider } >
+        <Route path="topic/:topic" component={ ProConApp }></Route>
+      </Route>
       <Redirect from="/" to="/app" />
     </Router>
   ),
