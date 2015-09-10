@@ -27946,13 +27946,8 @@
 
 	var _proconsJs2 = _interopRequireDefault(_proconsJs);
 
-	var _topics = __webpack_require__(318);
-
-	var _topics2 = _interopRequireDefault(_topics);
-
 	var rootReducer = (0, _redux.combineReducers)({
-	  procons: _proconsJs2['default'],
-	  topics: _topics2['default']
+	  procons: _proconsJs2['default']
 	});
 
 	exports['default'] = rootReducer;
@@ -53544,58 +53539,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 318 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	Object.defineProperty(exports, '__esModule', {
-	  value: true
-	});
-	exports['default'] = topics;
-
-	function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj['default'] = obj; return newObj; } }
-
-	var _lodash = __webpack_require__(242);
-
-	var _ = _interopRequireWildcard(_lodash);
-
-	var _constantsActionTypes = __webpack_require__(244);
-
-	var initialState = {
-	  activeIndex: 0,
-	  topics: [{
-	    id: 0,
-	    topicName: 'Future of work'
-	  }, {
-	    id: 1,
-	    topicName: 'Community'
-	  }, {
-	    id: 2,
-	    topicName: 'Big Data'
-	  }, {
-	    id: 3,
-	    topicName: 'Shallows'
-	  }]
-	};
-
-	function topics(state, action) {
-	  if (state === undefined) state = initialState;
-
-	  switch (action.type) {
-	    case _constantsActionTypes.SWITCH_TOPIC:
-	      return Object.assign({}, state, {
-	        activeIndex: action.index
-	      });
-
-	    default:
-	      return state;
-	  }
-	}
-
-	module.exports = exports['default'];
-
-/***/ },
+/* 318 */,
 /* 319 */
 /***/ function(module, exports, __webpack_require__) {
 
