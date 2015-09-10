@@ -27979,25 +27979,26 @@
 
 	var _constantsActionTypes = __webpack_require__(244);
 
-	var initialState = [{
-	  id: 0,
-	  pro: {
-	    claim: '',
-	    supports: []
-	  },
-	  con: {
-	    claim: '',
-	    supports: []
+	var initialState = {
+	  currTopicIdx: 0,
+	  topics: ['Future of work', 'Community', 'Big Data', 'Shallows'],
+	  procons: {
+	    0: [],
+	    1: [],
+	    2: [],
+	    3: []
 	  }
-	}];
+	};
 
 	function procons(state, action) {
 	  if (state === undefined) state = initialState;
 
 	  switch (action.type) {
 	    case _constantsActionTypes.ADD_PROCON:
-	      return [{
-	        id: state.reduce(function (maxId, procon) {
+	      var stateCopy = _.cloneDeep(state);
+	      var originProCon = stateCopy.procons[stateCopy.currTopicIdx];
+	      stateCopy.procons[stateCopy.currTopicIdx] = [{
+	        id: originProCon.reduce(function (maxId, procon) {
 	          return Math.max(procon.id, maxId);
 	        }, -1) + 1,
 	        pro: {
@@ -28008,20 +28009,26 @@
 	          claim: '',
 	          supports: []
 	        }
-	      }].concat(_toConsumableArray(state));
+	      }].concat(_toConsumableArray(originProCon));
+	      return stateCopy;
 
 	    case _constantsActionTypes.ADD_SUPPORT:
 	      var stateCopy = _.cloneDeep(state);
-	      var origin = stateCopy[action.proconIdx][action.side].supports;
-	      stateCopy[action.proconIdx][action.side].supports = [''].concat(_toConsumableArray(origin));
+	      var origin = stateCopy.procons[stateCopy.currTopicIdx][action.proconIdx][action.side].supports;
+	      stateCopy.procons[stateCopy.currTopicIdx][action.proconIdx][action.side].supports = [''].concat(_toConsumableArray(origin));
 	      return stateCopy;
+
+	    case _constantsActionTypes.SWITCH_TOPIC:
+	      return Object.assign({}, state, {
+	        currTopicIdx: action.index
+	      });
 
 	    case _constantsActionTypes.UPDATE_SUPPORT:
 	      var stateCopy = _.cloneDeep(state);
 	      if (action.supportIdx === null) {
-	        stateCopy[action.proconIdx][action.side].claim = action.text;
+	        stateCopy.procons[stateCopy.currTopicIdx][action.proconIdx][action.side].claim = action.text;
 	      } else {
-	        stateCopy[action.proconIdx][action.side].supports[action.supportIdx] = action.text;
+	        stateCopy.procons[stateCopy.currTopicIdx][action.proconIdx][action.side].supports[action.supportIdx] = action.text;
 	      }
 	      return stateCopy;
 
@@ -53347,10 +53354,9 @@
 	    key: 'render',
 	    value: function render() {
 	      var self = this;
-
-	      var topics = self.props.topics.topics.map(function (topic, index) {
+	      var topics = self.props.topics.map(function (topic, index) {
 	        var menuClass = 'item';
-	        if (index === self.props.topics.activeIndex) {
+	        if (index === self.props.currTopicIdx) {
 	          menuClass = 'active ' + menuClass;
 	        }
 
@@ -53361,7 +53367,7 @@
 	            key: index,
 	            onClick: self.changeTopic.bind(self, index)
 	          },
-	          topic.topicName
+	          topic
 	        );
 	      });
 
@@ -53494,7 +53500,6 @@
 	    value: function render() {
 	      var _props = this.props;
 	      var procons = _props.procons;
-	      var topics = _props.topics;
 	      var dispatch = _props.dispatch;
 
 	      var actions = (0, _redux.bindActionCreators)(ProConActions, dispatch);
@@ -53505,10 +53510,14 @@
 	        _react2['default'].createElement(
 	          'div',
 	          { className: 'RT-Page-Topics' },
-	          _react2['default'].createElement(_ProConPagePageElementsTopics2['default'], { topics: topics, changeTopic: actions.changeTopic })
+	          _react2['default'].createElement(_ProConPagePageElementsTopics2['default'], {
+	            currTopicIdx: procons.currTopicIdx,
+	            topics: procons.topics,
+	            changeTopic: actions.changeTopic
+	          })
 	        ),
 	        _react2['default'].createElement(_ProConPageProConsProConContainer2['default'], {
-	          procons: procons,
+	          procons: procons.procons[procons.currTopicIdx],
 	          actions: actions
 	        }),
 	        _react2['default'].createElement(_ProConPagePageElementsFooter2['default'], null)
@@ -53521,14 +53530,13 @@
 
 	ProConApp.propTypes = {
 	  dispatch: _react.PropTypes.func.isRequired,
-	  procons: _react.PropTypes.array.isRequired,
-	  topics: _react.PropTypes.array.isRequied
+	  procons: _react.PropTypes.array.isRequired
+
 	};
 
 	function mapStateToProps(state) {
 	  return {
-	    procons: state.procons,
-	    topics: state.topics
+	    procons: state.procons
 	  };
 	}
 
@@ -53576,9 +53584,9 @@
 
 	  switch (action.type) {
 	    case _constantsActionTypes.SWITCH_TOPIC:
-	      var stateCopy = _.cloneDeep(state);
-	      stateCopy.activeIndex = action.index;
-	      return stateCopy;
+	      return Object.assign({}, state, {
+	        activeIndex: action.index
+	      });
 
 	    default:
 	      return state;

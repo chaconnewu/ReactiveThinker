@@ -15,10 +15,9 @@ class Topics extends React.Component {
 
   render () {
     var self = this;
-
-    var topics = self.props.topics.topics.map(function(topic, index) {
+    var topics = self.props.topics.map(function(topic, index) {
       var menuClass = 'item';
-      if (index === self.props.topics.activeIndex) {
+      if (index === self.props.currTopicIdx) {
         menuClass = 'active ' + menuClass;
       }
 
@@ -28,7 +27,7 @@ class Topics extends React.Component {
           key={index}
           onClick={ self.changeTopic.bind(self, index) }
         >
-          { topic.topicName }
+          { topic }
         </a>
       );
     });

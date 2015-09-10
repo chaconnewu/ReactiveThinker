@@ -13,16 +13,20 @@ import "./ProConApp.less";
 
 class ProConApp extends Component {
   render () {
-    const { procons, topics, dispatch } = this.props;
+    const { procons, dispatch } = this.props;
     const actions = bindActionCreators(ProConActions, dispatch);
     return (
       <div>
         <Menu />
         <div className="RT-Page-Topics">
-          <Topics topics={ topics } changeTopic={ actions.changeTopic }/>
+          <Topics
+            currTopicIdx={ procons.currTopicIdx }
+            topics={ procons.topics }
+            changeTopic={ actions.changeTopic }
+          />
         </div>
         <ProConContainer
-          procons={ procons }
+          procons={ procons.procons[procons.currTopicIdx] }
           actions={ actions }
         />
         <Footer />
@@ -33,14 +37,13 @@ class ProConApp extends Component {
 
 ProConApp.propTypes = {
   dispatch: PropTypes.func.isRequired,
-  procons: PropTypes.array.isRequired,
-  topics: PropTypes.array.isRequied
+  procons: PropTypes.array.isRequired
+
 };
 
 function mapStateToProps(state) {
   return {
-    procons: state.procons,
-    topics: state.topics
+    procons: state.procons
   };
 }
 
