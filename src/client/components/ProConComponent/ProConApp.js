@@ -11,19 +11,6 @@ import Topics from './ProConPage/PageElements/Topics';
 
 import "./ProConApp.less";
 
-// class ProConApp extends Component {
-//   render () {
-//     const { procons, topics, dispatch } = this.props;
-//     const actions = bindActionCreators(ProConActions, dispatch);
-//     return (
-//       <Page
-//         actions={ actions }
-//         procons={ procons }
-//       />
-//     );
-//   }
-// }
-
 class ProConApp extends Component {
   render () {
     const { procons, topics, dispatch } = this.props;
@@ -32,7 +19,7 @@ class ProConApp extends Component {
       <div>
         <Menu />
         <div className="RT-Page-Topics">
-          <Topics />
+          <Topics topics={ topics } changeTopic={ actions.changeTopic }/>
         </div>
         <ProConContainer
           procons={ procons }

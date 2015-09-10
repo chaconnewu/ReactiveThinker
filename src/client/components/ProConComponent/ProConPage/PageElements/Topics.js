@@ -2,29 +2,23 @@ import React from 'react';
 import './Topics.less';
 import $ from 'jquery';
 
-var TopicNames = ['Future of work', 'Community', 'Big Data', 'Shallows'];
+// var TopicNames = ['Future of work', 'Community', 'Big Data', 'Shallows'];
 
 class Topics extends React.Component {
   constructor (props) {
     super(props);
-    var self = this;
-    self.state = {
-      activeIndex : 0
-    };
   }
 
   changeTopic (index) {
-    var self = this;
-    self.setState({
-      activeIndex : index
-    });
+    this.props.changeTopic(index);
   }
 
   render () {
     var self = this;
-    var topics = TopicNames.map(function(topic, index) {
+
+    var topics = self.props.topics.topics.map(function(topic, index) {
       var menuClass = 'item';
-      if (index === self.state.activeIndex) {
+      if (index === self.props.topics.activeIndex) {
         menuClass = 'active ' + menuClass;
       }
 
@@ -34,7 +28,7 @@ class Topics extends React.Component {
           key={index}
           onClick={ self.changeTopic.bind(self, index) }
         >
-          { topic }
+          { topic.topicName }
         </a>
       );
     });

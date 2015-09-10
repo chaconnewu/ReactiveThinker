@@ -19,3 +19,7 @@ export function deleteSupport(proconIdx, side, supportIdx) {
 export function updateSupport(proconIdx, side, supportIdx, text) {
   return { type: types.UPDATE_SUPPORT, proconIdx, side, supportIdx, text };
 }
+
+export function changeTopic(index) {
+  return { type: types.SWITCH_TOPIC, index };
+}

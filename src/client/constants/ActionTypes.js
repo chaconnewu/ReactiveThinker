@@ -3,3 +3,6 @@ export const DELETE_PROCON = 'DELETE_PROCON';
 export const ADD_SUPPORT = 'ADD_SUPPORT';
 export const DELETE_SUPPORT = 'DELETE_SUPPORT';
 export const UPDATE_SUPPORT = 'UPDATE_SUPPORT';
+
+
+export const SWITCH_TOPIC = 'SWITCH_TOPIC';

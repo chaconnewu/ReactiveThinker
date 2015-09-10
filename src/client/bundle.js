@@ -40424,7 +40424,10 @@
 	var DELETE_SUPPORT = 'DELETE_SUPPORT';
 	exports.DELETE_SUPPORT = DELETE_SUPPORT;
 	var UPDATE_SUPPORT = 'UPDATE_SUPPORT';
+
 	exports.UPDATE_SUPPORT = UPDATE_SUPPORT;
+	var SWITCH_TOPIC = 'SWITCH_TOPIC';
+	exports.SWITCH_TOPIC = SWITCH_TOPIC;
 
 /***/ },
 /* 245 */,
@@ -40441,6 +40444,7 @@
 	exports.addSupport = addSupport;
 	exports.deleteSupport = deleteSupport;
 	exports.updateSupport = updateSupport;
+	exports.changeTopic = changeTopic;
 
 	function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj['default'] = obj; return newObj; } }
 
@@ -40466,6 +40470,10 @@
 
 	function updateSupport(proconIdx, side, supportIdx, text) {
 	  return { type: types.UPDATE_SUPPORT, proconIdx: proconIdx, side: side, supportIdx: supportIdx, text: text };
+	}
+
+	function changeTopic(index) {
+	  return { type: types.SWITCH_TOPIC, index: index };
 	}
 
 /***/ },
@@ -53319,7 +53327,7 @@
 
 	var _jquery2 = _interopRequireDefault(_jquery);
 
-	var TopicNames = ['Future of work', 'Community', 'Big Data', 'Shallows'];
+	// var TopicNames = ['Future of work', 'Community', 'Big Data', 'Shallows'];
 
 	var Topics = (function (_React$Component) {
 	  _inherits(Topics, _React$Component);
@@ -53328,27 +53336,21 @@
 	    _classCallCheck(this, Topics);
 
 	    _get(Object.getPrototypeOf(Topics.prototype), 'constructor', this).call(this, props);
-	    var self = this;
-	    self.state = {
-	      activeIndex: 0
-	    };
 	  }
 
 	  _createClass(Topics, [{
 	    key: 'changeTopic',
 	    value: function changeTopic(index) {
-	      var self = this;
-	      self.setState({
-	        activeIndex: index
-	      });
+	      this.props.changeTopic(index);
 	    }
 	  }, {
 	    key: 'render',
 	    value: function render() {
 	      var self = this;
-	      var topics = TopicNames.map(function (topic, index) {
+
+	      var topics = self.props.topics.topics.map(function (topic, index) {
 	        var menuClass = 'item';
-	        if (index === self.state.activeIndex) {
+	        if (index === self.props.topics.activeIndex) {
 	          menuClass = 'active ' + menuClass;
 	        }
 
@@ -53359,7 +53361,7 @@
 	            key: index,
 	            onClick: self.changeTopic.bind(self, index)
 	          },
-	          topic
+	          topic.topicName
 	        );
 	      });
 
@@ -53478,19 +53480,6 @@
 
 	__webpack_require__(319);
 
-	// class ProConApp extends Component {
-	//   render () {
-	//     const { procons, topics, dispatch } = this.props;
-	//     const actions = bindActionCreators(ProConActions, dispatch);
-	//     return (
-	//       <Page
-	//         actions={ actions }
-	//         procons={ procons }
-	//       />
-	//     );
-	//   }
-	// }
-
 	var ProConApp = (function (_Component) {
 	  _inherits(ProConApp, _Component);
 
@@ -53516,7 +53505,7 @@
 	        _react2['default'].createElement(
 	          'div',
 	          { className: 'RT-Page-Topics' },
-	          _react2['default'].createElement(_ProConPagePageElementsTopics2['default'], null)
+	          _react2['default'].createElement(_ProConPagePageElementsTopics2['default'], { topics: topics, changeTopic: actions.changeTopic })
 	        ),
 	        _react2['default'].createElement(_ProConPageProConsProConContainer2['default'], {
 	          procons: procons,
@@ -53548,7 +53537,7 @@
 
 /***/ },
 /* 318 */
-/***/ function(module, exports) {
+/***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
@@ -53556,24 +53545,41 @@
 	  value: true
 	});
 	exports['default'] = topics;
-	var initialState = [{
-	  id: 0,
-	  topicName: 'Future of work'
-	}, {
-	  id: 1,
-	  topicName: 'Community'
-	}, {
-	  id: 2,
-	  topicName: 'Big Data'
-	}, {
-	  id: 3,
-	  topicName: 'Shallows'
-	}];
+
+	function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj['default'] = obj; return newObj; } }
+
+	var _lodash = __webpack_require__(242);
+
+	var _ = _interopRequireWildcard(_lodash);
+
+	var _constantsActionTypes = __webpack_require__(244);
+
+	var initialState = {
+	  activeIndex: 0,
+	  topics: [{
+	    id: 0,
+	    topicName: 'Future of work'
+	  }, {
+	    id: 1,
+	    topicName: 'Community'
+	  }, {
+	    id: 2,
+	    topicName: 'Big Data'
+	  }, {
+	    id: 3,
+	    topicName: 'Shallows'
+	  }]
+	};
 
 	function topics(state, action) {
 	  if (state === undefined) state = initialState;
 
 	  switch (action.type) {
+	    case _constantsActionTypes.SWITCH_TOPIC:
+	      var stateCopy = _.cloneDeep(state);
+	      stateCopy.activeIndex = action.index;
+	      return stateCopy;
+
 	    default:
 	      return state;
 	  }
